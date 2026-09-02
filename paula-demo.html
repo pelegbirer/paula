@@ -540,7 +540,10 @@
                 </button>
 
                 <!-- Secure Payment Badges -->
-                <div class="flex items-center justify-center gap-2 mb-6">
+				<div class="flex items-center justify-center gap-2 mb-6">
+                    <div class="bg-white px-2 py-1.5 rounded-lg flex items-center justify-center shadow-xs cursor-pointer transition h-7 w-12" onclick="showToast('תשלום מהיר ומאובטח באמצעות Bit')" title="Bit">
+                        <img src="https://i.imgur.com/WLkkLXf.png" alt="Bit" class="h-6 w-6 object-contain">
+                    </div>
                     <div class="bg-white/95 px-2.5 py-1.5 rounded-lg flex items-center justify-center shadow-xs w-12 h-7">
                         <span class="font-black italic text-blue-900 text-xs">VISA</span>
                     </div>
@@ -548,13 +551,8 @@
                         <span class="w-3.5 h-3.5 rounded-full bg-red-500 inline-block -mr-1"></span>
                         <span class="w-3.5 h-3.5 rounded-full bg-amber-400 opacity-90 inline-block"></span>
                     </div>
-                    <div class="bg-white/95 px-2 py-1 rounded-lg flex items-center justify-center shadow-xs text-[9px] font-extrabold text-teal-800 leading-none text-center">
-                        SSL<br>מוצפן 100%
-                    </div>
-                    <div class="bg-white/95 px-2.5 py-1.5 rounded-lg flex items-center justify-center shadow-xs w-12 h-7">
-                        <span class="font-black italic text-blue-700 text-xs">PayPal</span>
-                    </div>
                 </div>
+				
 
                 <!-- Footer Copyright & Links -->
                 <div class="border-t border-teal-700/60 pt-4 text-xs text-teal-200 font-medium">
@@ -739,7 +737,7 @@
             }
         }
 
-        setInterval(showLivePopup, 12000);
+        // setInterval(showLivePopup, 12000);
 
         window.onclick = function(event) {
             const modal = document.getElementById('outOfStockModal');
