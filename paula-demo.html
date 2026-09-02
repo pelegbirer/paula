@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>הבקבוק החכם של פאולה - Paula Pet Bottle</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Heebo -->
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Heebo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#0d9488',
+                            600: '#0f766e',
+                            700: '#115e59',
+                            800: '#134e4a',
+                            900: '#042f2e',
+                        },
+                        pinkAccent: '#f472b6',
+                        blueAccent: '#0ea5e9'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .mobile-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 20px 35px -10px rgba(15, 23, 42, 0.12), 0 10px 15px -5px rgba(15, 23, 42, 0.08);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 220px;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+        .accordion-item.active .chevron-icon {
+            transform: rotate(180deg);
+        }
+        .modal {
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+        .modal-active {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        .color-dot {
+            transition: all 0.2s ease;
+        }
+        .color-dot.selected {
+            transform: scale(1.25);
+            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #0f766e;
+        }
+    </style>
+</head>
+<body class="bg-slate-200 min-h-screen">
+
+    <!-- Mobile Viewport Container -->
+    <div class="mobile-container flex flex-col min-h-screen pb-6">
+
+        <div class="bg-gradient-to-r from-teal-900 via-teal-800 to-teal-900 text-white text-[11px] font-bold py-1.5 px-3 text-center flex items-center justify-center gap-2 shadow-inner">
+            <i class="fa-solid fa-truck-fast text-teal-300 animate-bounce"></i>
+            <span>משלוח אקספרס מהיר עד בית הלקוח + אחריות יבואן רשמית לשנה!</span>
+        </div>
+
+        <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center justify-between shadow-xs">
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <div class="w-9 h-9 rounded-xl bg-teal-50 border border-teal-100 text-teal-700 flex items-center justify-center shadow-xs">
+                    <i class="fa-solid fa-paw text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-black tracking-tight text-slate-900 block leading-none">Paula</span>
+                    <span class="text-[9px] font-bold tracking-wider text-teal-700 uppercase block mt-0.5">Official Pet Store</span>
+                </div>
+            </div>
+
+            <nav class="flex items-center space-x-2 space-x-reverse text-sm font-medium">
+                <a href="tel:0552707788" class="text-xs font-extrabold text-slate-800 bg-slate-100 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 hover:bg-slate-200 transition border border-slate-200/60 shadow-xs">
+                    <i class="fa-solid fa-phone text-teal-600"></i>
+                    <span dir="ltr">055-270-7788</span>
+                </a>
+                <button onclick="scrollToPricing()" class="bg-teal-700 text-white text-xs font-black px-3 py-2 rounded-lg shadow-sm hover:bg-teal-800 transition flex items-center gap-1.5 active:scale-98">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>הזמן עכשיו</span>
+                </button>
+            </nav>
+        </header>
+
+        <section id="hero" class="p-3 pt-4">
+            <!-- Hero Section: Text over background image without white box -->
+            <div class="relative rounded-3xl overflow-hidden shadow-lg border border-slate-200/80 min-h-[440px] flex items-end">
+                <!-- Background Image -->
+                <img src="https://imgur.com/Z4qR1pa.png" 
+                     alt="הבקבוק החכם של פאולה - תמונה ראשית" 
+                     class="absolute inset-0 w-full h-full object-cover object-center" />
+
+                <!-- Gradient Overlay for Readability -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+
+                <!-- Text Overlay Content -->
+                <div class="relative z-20 p-5 w-full text-white flex flex-col justify-end space-y-2.5">
+                    <div class="inline-flex items-center gap-1 bg-amber-400/90 text-amber-950 px-2.5 py-0.5 rounded-md text-[10px] font-extrabold max-w-max backdrop-blur-xs">
+                        <i class="fa-solid fa-award text-amber-950"></i>
+                        <span>הנבחר לשנת 2026</span>
+                    </div>
+
+                    <h1 class="text-lg sm:text-xl font-black leading-snug drop-shadow-md">
+                        הבקבוק החכם של פאולה – <br>
+                        <span class="text-teal-300">טיול מושלם בלי התייבשות!</span>
+                    </h1>
+
+                    <div class="text-slate-200 text-xs font-medium space-y-1">
+                        <p class="flex items-center gap-1.5"><span class="text-teal-400">✓</span> מערכת 2 ב-1 מים וקערית</p>
+                        <p class="flex items-center gap-1.5"><span class="text-teal-400">✓</span> אטימות מוחלטת לתיק הגב</p>
+                        <p class="flex items-center gap-1.5"><span class="text-teal-400">✓</span> מנגנון החזרת מים עודפים</p>
+                    </div>
+
+                    <!-- Rating -->
+                    <div class="flex items-center gap-2 pt-1">
+                        <span class="font-black text-xs">4.9 / 5.0</span>
+                        <div class="text-amber-400 text-xs flex gap-0.5">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="text-[10px] text-slate-300 font-bold">(380+ לקוחות)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Bar Professional -->
+            <div class="grid grid-cols-3 gap-2 my-4 bg-white p-3 rounded-2xl border border-slate-200/60 shadow-xs text-center">
+                <div class="flex flex-col items-center justify-center p-1">
+                    <div class="w-9 h-9 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center mb-1 text-base border border-teal-100">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <span class="text-xs font-black text-slate-800 leading-tight">אחריות לשנה</span>
+                    <span class="text-[9px] text-slate-500 font-medium">יבואן רשמי</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-1 border-r border-l border-slate-100">
+                    <div class="w-9 h-9 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center mb-1 text-base border border-teal-100">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <span class="text-xs font-black text-slate-800 leading-tight">תשלום מאובטח</span>
+                    <span class="text-[9px] text-slate-500 font-medium">תקן PCI-DSS</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-1">
+                    <div class="w-9 h-9 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center mb-1 text-base border border-teal-100">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <span class="text-xs font-black text-slate-800 leading-tight">100% ללא BPA</span>
+                    <span class="text-[9px] text-slate-500 font-medium">בטוח לכלבים</span>
+                </div>
+            </div>
+
+            <div id="pricing-section" class="mt-4">
+                <div class="text-center mb-4">
+                    <span class="bg-teal-100 text-teal-800 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">מחירון מבצע מיוחד</span>
+                    <h2 class="text-xl font-black text-slate-900 mt-1">בחרו את החבילה המשתלמת עבורכם</h2>
+                    <p class="text-xs text-slate-500 font-medium">משלוח מהיר עד הבית כלול בהזמנות נבחרות</p>
+                </div>
+
+                <div class="space-y-5">
+                    <!-- Card 1: Single -->
+                    <div class="bg-white border-2 border-slate-200/80 rounded-3xl p-5 shadow-sm relative overflow-hidden transition hover:border-teal-600">
+                        <div class="text-center mb-2">
+                            <span class="text-xs font-extrabold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md">יחידה אחת</span>
+                            <div class="flex items-center justify-center gap-2 mt-1.5">
+                                <span class="text-2xl font-black text-slate-900">₪60</span>
+                                <span class="text-sm text-slate-400 line-through">₪75</span>
+                            </div>
+                        </div>
+
+                        <div class="w-full h-[320px] sm:h-[360px] mx-auto my-3 flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-50 via-teal-50/10 to-teal-50/30 rounded-2xl border border-slate-100/80 p-2 shadow-inner">
+                            <img src="https://imgur.com/TKhTt4t.png" 
+                                 alt="בקבוק אחד" 
+                                 class="w-full h-full object-contain drop-shadow-lg transition-transform duration-500 hover:scale-105" />
+                        </div>
+
+                        <div class="text-center my-3">
+                            <span class="text-[11px] font-bold text-slate-600 block mb-1.5">בחרו צבע ליחידה:</span>
+                            <div class="flex justify-center items-center gap-3">
+                                <button onclick="setCardColor(1, 'blue')" id="card1-dot-blue" class="color-dot selected w-7 h-7 rounded-full bg-teal-700 focus:outline-none border-2 border-white shadow-sm" title="טורקיז"></button>
+                                <button onclick="setCardColor(1, 'pink')" id="card1-dot-pink" class="color-dot w-7 h-7 rounded-full bg-pink-400 focus:outline-none border-2 border-white shadow-sm" title="ורוד"></button>
+                            </div>
+                        </div>
+
+                        <button onclick="addToCart('יחידה Single')" class="w-full py-4 bg-slate-900 hover:bg-teal-700 text-white font-black text-sm rounded-2xl shadow-md active:scale-98 transition flex items-center justify-center gap-2 mt-3">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <span>הוסיפו לעגלה - ₪60</span>
+                        </button>
+                        <div class="text-center mt-2">
+                            <span class="text-[10px] text-slate-500 font-medium"><i class="fa-solid fa-truck-fast text-teal-600 ml-1"></i> כולל משלוח מהיר עד הבית</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: 2-in-1 (Popular) -->
+                    <div class="bg-white border-2 border-teal-600 rounded-3xl p-5 shadow-lg relative overflow-hidden ring-4 ring-teal-50">
+                        <div class="absolute top-0 right-0 left-0 bg-teal-600 text-white text-[11px] font-black tracking-wider py-1.5 text-center shadow-xs">
+                            🔥 המבצע המשתלם ביותר (חסכו ₪30 + משלוח אקספרס חינם)
+                        </div>
+
+                        <div class="text-center mb-2 pt-4">
+                            <span class="text-xs font-extrabold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md">זוג בקבוקים</span>
+                            <div class="flex items-center justify-center gap-2 mt-1.5">
+                                <span class="text-3xl font-black text-teal-700">₪100</span>
+                                <span class="text-base text-slate-400 line-through">₪130</span>
+                            </div>
+                        </div>
+
+                        <div class="w-full h-[320px] sm:h-[360px] mx-auto my-3 flex items-center justify-center overflow-hidden bg-gradient-to-b from-teal-50/40 via-teal-50/20 to-teal-100/40 rounded-2xl border border-teal-100 p-2 shadow-inner">
+                            <img src="https://imgur.com/4sFLuTK.png" 
+                                 alt="שני בקבוקים" 
+                                 class="w-full h-full object-contain drop-shadow-lg transition-transform duration-500 hover:scale-105" />
+                        </div>
+
+                        <div class="text-center my-3">
+                            <span class="text-[11px] font-bold text-slate-600 block mb-1.5">בחרו שילוב צבעים לזוג:</span>
+                            <div class="flex justify-center items-center gap-3">
+                                <button onclick="setCard2Combination('blue-pink')" id="card2-combo-bp" class="p-1.5 rounded-full border-2 border-teal-600 bg-teal-50 focus:outline-none flex items-center gap-1.5 transition scale-110 shadow-xs" title="טורקיז + ורוד">
+                                    <span class="w-4 h-4 rounded-full bg-teal-700 inline-block shadow-xs"></span>
+                                    <span class="w-4 h-4 rounded-full bg-pink-400 inline-block shadow-xs"></span>
+                                </button>
+                                <button onclick="setCard2Combination('blue-blue')" id="card2-combo-bb" class="p-1.5 rounded-full border-2 border-slate-200 bg-white focus:outline-none flex items-center gap-1.5 transition" title="טורקיז + טורקיז">
+                                    <span class="w-4 h-4 rounded-full bg-teal-700 inline-block shadow-xs"></span>
+                                    <span class="w-4 h-4 rounded-full bg-teal-700 inline-block shadow-xs"></span>
+                                </button>
+                                <button onclick="setCard2Combination('pink-pink')" id="card2-combo-pp" class="p-1.5 rounded-full border-2 border-slate-200 bg-white focus:outline-none flex items-center gap-1.5 transition" title="ורוד + ורוד">
+                                    <span class="w-4 h-4 rounded-full bg-pink-400 inline-block shadow-xs"></span>
+                                    <span class="w-4 h-4 rounded-full bg-pink-400 inline-block shadow-xs"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button onclick="addToCart('מבצע 2 ב-1')" class="w-full py-4 bg-teal-600 hover:bg-teal-700 text-white font-black text-sm rounded-2xl shadow-md active:scale-98 transition flex items-center justify-center gap-2 mt-3">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span>הוסיפו זוג לעגלה - ₪100</span>
+                        </button>
+                        <div class="text-center mt-2">
+                            <span class="text-[10px] text-teal-700 font-bold"><i class="fa-solid fa-star text-amber-400"></i> 78% מהלקוחות בוחרים בחבילה זו!</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Family Bundle 3-in-1 -->
+                    <div class="bg-white border-2 border-slate-200/80 rounded-3xl p-5 shadow-sm relative overflow-hidden transition hover:border-teal-600">
+                        <div class="text-center mb-2">
+                            <span class="text-xs font-extrabold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md">חבילה משפחתית (3 יחידות)</span>
+                            <div class="flex items-center justify-center gap-2 mt-1.5">
+                                <span class="text-2xl font-black text-slate-900">₪140</span>
+                                <span class="text-sm text-slate-400 line-through">₪160</span>
+                            </div>
+                        </div>
+
+                        <div class="w-full h-[320px] sm:h-[360px] mx-auto my-3 flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-50 via-teal-50/10 to-teal-50/30 rounded-2xl border border-slate-100/80 p-2 shadow-inner">
+                            <img src="https://imgur.com/0yuvVEK.png" 
+                                 alt="שלושה בקבוקים" 
+                                 class="w-full h-full object-contain drop-shadow-lg transition-transform duration-500 hover:scale-105" />
+                        </div>
+
+                        <div class="text-center my-3">
+                            <span class="text-[11px] font-bold text-slate-600 block mb-1.5">בחרו שילוב צבעים ל-3 יחידות:</span>
+                            <div class="flex justify-center items-center gap-3">
+                                <button onclick="setCard3Combination('mix1')" id="card3-combo-m1" class="p-1.5 rounded-full border-2 border-teal-600 bg-teal-50 focus:outline-none flex items-center gap-1 transition scale-110 shadow-xs" title="2 טורקיז + 1 ורוד">
+                                    <span class="w-3.5 h-3.5 rounded-full bg-teal-700 inline-block shadow-xs"></span>
+                                    <span class="w-3.5 h-3.5 rounded-full bg-teal-700 inline-block shadow-xs"></span>
+                                    <span class="w-3.5 h-3.5 rounded-full bg-pink-400 inline-block shadow-xs"></span>
+                                </button>
+                                <button onclick="setCard3Combination('mix2')" id="card3-combo-m2" class="p-1.5 rounded-full border-2 border-slate-200 bg-white focus:outline-none flex items-center gap-1 transition" title="1 טורקיז + 2 ורוד">
+                                    <span class="w-3.5 h-3.5 rounded-full bg-teal-700 inline-block shadow-xs"></span>
+                                    <span class="w-3.5 h-3.5 rounded-full bg-pink-400 inline-block shadow-xs"></span>
+                                    <span class="w-3.5 h-3.5 rounded-full bg-pink-400 inline-block shadow-xs"></span>
+                                </button>
+                                <button onclick="setCard3Combination('all-blue')" id="card3-combo-ab" class="p-1.5 rounded-full border-2 border-slate-200 bg-white focus:outline-none flex items-center gap-1 transition" title="3 טורקיז">
+                                    <span class="w-3.5 h-3.5 rounded-full bg-teal-700 inline-block shadow-xs"></span>
+                                    <span class="w-3.5 h-3.5 rounded-full bg-teal-700 inline-block shadow-xs"></span>
+                                    <span class="w-3.5 h-3.5 rounded-full bg-teal-700 inline-block shadow-xs"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button onclick="addToCart('חבילה משפחתית 3-1')" class="w-full py-4 bg-slate-900 hover:bg-teal-700 text-white font-black text-sm rounded-2xl shadow-md active:scale-98 transition flex items-center justify-center gap-2 mt-3">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <span>הוסיפו 3 יחידות לעגלה - ₪140</span>
+                        </button>
+                        <div class="text-center mt-2">
+                            <span class="text-[10px] text-slate-500 font-medium"><i class="fa-solid fa-shield-halved text-teal-600 ml-1"></i> אחריות יבואן רשמית לשנה מלאה</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-8 border-t border-slate-200/80 pt-6 px-4 bg-slate-50">
+            <div class="text-center mb-6">
+                <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">חוות דעת מאומתות</span>
+                <h2 class="text-xl font-black text-slate-900 mt-1">מה אומרים בעלי הכלבים שכבר קנו?</h2>
+                <div class="flex items-center justify-center gap-1.5 mt-1.5 text-teal-700 font-bold text-xs">
+                    <i class="fa-solid fa-circle-check text-teal-600"></i>
+                    <span>מעל 380 חוות דעת חיוביות מלקוחות אמיתיים בישראל</span>
+                </div>
+            </div>
+
+            <!-- Reviews Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                <!-- Review 1 -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-xs flex flex-col justify-between text-right">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <h4 class="font-extrabold text-xs text-slate-900">חן כהן</h4>
+                                <span class="text-[9px] text-slate-400 font-bold">רמת גן</span>
+                            </div>
+                            <span class="text-[9px] text-teal-800 bg-teal-50 border border-teal-100 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-check text-[8px]"></i> רוכש מאומת
+                            </span>
+                        </div>
+                        <div class="text-amber-400 text-[11px] flex gap-0.5 mb-2">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-xs text-slate-700 font-medium leading-relaxed">
+                            "המוצר הכי שימושי שמצאתי לטיולים עם הכלב בקיץ. הבקבוק אטום לחלוטין בתוך תיק הגב שלי, והיכולת להחזיר את המים הנותרים לקערית פשוט חוסכת בזבוז מים בהליכות ארוכות!"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-xs flex flex-col justify-between text-right">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <h4 class="font-extrabold text-xs text-slate-900">מיטל לוי</h4>
+                                <span class="text-[9px] text-slate-400 font-bold">חיפה</span>
+                            </div>
+                            <span class="text-[9px] text-teal-800 bg-teal-50 border border-teal-100 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-check text-[8px]"></i> רוכשת מאומתת
+                            </span>
+                        </div>
+                        <div class="text-amber-400 text-[11px] flex gap-0.5 mb-2">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-xs text-slate-700 font-medium leading-relaxed">
+                            "הזמנתי את מבצע הזוג לי ולבן זוגי כדי שלכל אחד יהיה בטיולים בפארק. הלחיצה ביד אחת נוחה במיוחד כשהכלב מושך ברצועה. איכות פלסטיק ברמה גבוהה מאוד ללא שום ריח לוואי."
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-xs flex flex-col justify-between text-right">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <h4 class="font-extrabold text-xs text-slate-900">דניאל שחר</h4>
+                                <span class="text-[9px] text-slate-400 font-bold">מודיעין</span>
+                            </div>
+                            <span class="text-[9px] text-teal-800 bg-teal-50 border border-teal-100 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-check text-[8px]"></i> רוכש מאומת
+                            </span>
+                        </div>
+                        <div class="text-amber-400 text-[11px] flex gap-0.5 mb-2">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-xs text-slate-700 font-medium leading-relaxed">
+                            "הכלב שלי ביסודיות רבה הפסיק לסרב לשתות בטיולים בשמש. המבנה של הקערית מותאם בדיוק למבנה הפה שלו. שירות הלקוחות בטלפון ענה מיד וסייע בבחירת הצבעים."
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-xs flex flex-col justify-between text-right">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <h4 class="font-extrabold text-xs text-slate-900">טל אברהם</h4>
+                                <span class="text-[9px] text-slate-400 font-bold">תל אביב</span>
+                            </div>
+                            <span class="text-[9px] text-teal-800 bg-teal-50 border border-teal-100 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-check text-[8px]"></i> רוכשת מאומתת
+                            </span>
+                        </div>
+                        <div class="text-amber-400 text-[11px] flex gap-0.5 mb-2">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-xs text-slate-700 font-medium leading-relaxed">
+                            "מנקים את הבקבוק בקלות רבה במדיח הכלים בסיום הטיול. אין דליפות בכלל, והצבעים נשארו כמו חדשים אחרי חודשים של שימוש אינטנסיבי. מומלץ ביותר!"
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Badges Footer -->
+            <div class="grid grid-cols-3 gap-2 py-4 border-t border-slate-200/80 text-center">
+                <div class="flex flex-col items-center">
+                    <div class="w-11 h-11 rounded-full border border-teal-200 text-teal-700 flex items-center justify-center text-lg mb-1 bg-white shadow-xs">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <span class="text-xs font-black text-slate-800">משלוח מהיר</span>
+                    <span class="text-[9px] text-slate-500">2-5 ימי עסקים</span>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div class="w-11 h-11 rounded-full border border-teal-200 text-teal-700 flex items-center justify-center text-lg mb-1 bg-white shadow-xs">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                    </div>
+                    <span class="text-xs font-black text-slate-800">החזר כספי מלא</span>
+                    <span class="text-[9px] text-slate-500">עד 30 יום באחריות</span>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div class="w-11 h-11 rounded-full border border-teal-200 text-teal-700 flex items-center justify-center text-lg mb-1 bg-white shadow-xs">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <span class="text-xs font-black text-slate-800">שירות לקוחות</span>
+                    <span class="text-[9px] text-teal-700 font-bold" dir="ltr">055-270-7788</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-4 px-4 pb-20">
+            <div class="text-center mb-3">
+                <h3 class="text-lg font-black text-slate-900">שאלות נפוצות על הבקבוק החכם</h3>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden mb-6">
+                <div class="accordion-item border-b border-slate-100">
+                    <button onclick="toggleAccordion(this)" class="w-full py-3.5 px-4 flex items-center justify-between text-right font-bold text-slate-800 text-xs hover:bg-slate-50 transition">
+                        <span>איך מנגנון החזרת המים העודפים עובד?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-300 chevron-icon"></i>
+                    </button>
+                    <div class="accordion-content px-4 text-xs text-slate-600 bg-slate-50/60 leading-relaxed font-medium">
+                        לחיצה קלה על כפתור השחרור מזרימה מים לקערית. אם הכלב לא סיים לשתות, מטים את הבקבוק כלפי מעלה ולוחצים קלות שוב – המים העודפים זורמים חזרה אל תוך המכל האטום ללא שום בזבוז!
+                    </div>
+                </div>
+
+                <div class="accordion-item border-b border-slate-100">
+                    <button onclick="toggleAccordion(this)" class="w-full py-3.5 px-4 flex items-center justify-between text-right font-bold text-slate-800 text-xs hover:bg-slate-50 transition">
+                        <span>האם הבקבוק מתאים לכל סוגי הכלבים?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-300 chevron-icon"></i>
+                    </button>
+                    <div class="accordion-content px-4 text-xs text-slate-600 bg-slate-50/60 leading-relaxed font-medium">
+                        בהחלט. פיית השתייה עוצבה במיוחד כך שתתאים בנוחות לכלבים קטנים (כמו פומרניין וגולדן זעיר) וגם לגזעים גדולים ששותים בנפחים גדולים בטיולי קיץ.
+                    </div>
+                </div>
+
+                <div class="accordion-item border-b border-slate-100">
+                    <button onclick="toggleAccordion(this)" class="w-full py-3.5 px-4 flex items-center justify-between text-right font-bold text-slate-800 text-xs hover:bg-slate-50 transition">
+                        <span>מאיזה חומרים עשוי הבקבוק והאם הוא בטוח?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-300 chevron-icon"></i>
+                    </button>
+                    <div class="accordion-content px-4 text-xs text-slate-600 bg-slate-50/60 leading-relaxed font-medium">
+                        הבקבוק מיוצר מחומרים איכותיים ביותר באישור תקן מחממיר, נטול BPA לחלוטין, עמיד בפני נפילות ומאושר למגע עם מי שתייה לחיות מחמד ובני אדם כאחד.
+                    </div>
+                </div>
+
+                <div class="accordion-item border-b border-slate-100">
+                    <button onclick="toggleAccordion(this)" class="w-full py-3.5 px-4 flex items-center justify-between text-right font-bold text-slate-800 text-xs hover:bg-slate-50 transition">
+                        <span>איך יוצרים קשר עם שירות הלקוחות בטלפון?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-300 chevron-icon"></i>
+                    </button>
+                    <div class="accordion-content px-4 text-xs text-slate-600 bg-slate-50/60 leading-relaxed font-medium">
+                        נציגי שירות הלקוחות של פאולה זמינים עבורכם בטלפון <a href="tel:0552707788" class="text-teal-700 font-bold underline" dir="ltr">055-270-7788</a> לכל שאלה, הכוונה או סיוע בהזמנה.
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button onclick="toggleAccordion(this)" class="w-full py-3.5 px-4 flex items-center justify-between text-right font-bold text-slate-800 text-xs hover:bg-slate-50 transition">
+                        <span>כמה זמן לוקח המשלוח לבית הלקוח?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-300 chevron-icon"></i>
+                    </button>
+                    <div class="accordion-content px-4 text-xs text-slate-600 bg-slate-50/60 leading-relaxed font-medium">
+                        אנו שולחים את ההזמנות באמצעות שליח מהיר עד פתח הבית בתוך 2 עד 5 ימי עסקים בלבד בכל רחבי הארץ.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Official Footer Callout Box -->
+            <div class="bg-gradient-to-br from-teal-900 via-teal-800 to-slate-900 rounded-3xl p-6 text-white text-center shadow-lg relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-teal-500/10 rounded-full blur-xl pointer-events-none"></div>
+                
+                <h3 class="text-xl font-black mb-1.5">מוכנים לטיול הבא בראש שקט?</h3>
+                <p class="text-xs text-teal-200 mb-4 font-medium">הזמינו עכשיו דרך האתר או בטלפון: <a href="tel:0552707788" class="underline font-bold" dir="ltr">055-270-7788</a></p>
+                
+                <button onclick="showOutOfStockModal()" class="w-full py-4 bg-white text-teal-900 font-black text-base rounded-2xl shadow-md hover:bg-teal-50 active:scale-98 transition mb-6 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-teal-700"></i>
+                    <span>הזמינו את הבקבוק עכשיו</span>
+                </button>
+
+                <!-- Secure Payment Badges with Updated Bit Container (Compact width & larger bit image) -->
+                <div class="flex items-center justify-center gap-2 mb-6">
+                    <div class="bg-white px-2 py-1.5 rounded-lg flex items-center justify-center shadow-xs cursor-pointer transition h-7 w-12" onclick="showToast('תשלום מהיר ומאובטח באמצעות Bit')" title="Bit">
+                        <img src="https://i.imgur.com/WLkkLXf.png" alt="Bit" class="h-6 w-6 object-contain">
+                    </div>
+                    <div class="bg-white/95 px-2.5 py-1.5 rounded-lg flex items-center justify-center shadow-xs w-12 h-7">
+                        <span class="font-black italic text-blue-900 text-xs">VISA</span>
+                    </div>
+                    <div class="bg-white/95 px-2 py-1 rounded-lg flex items-center justify-center shadow-xs w-12 h-7 gap-0.5">
+                        <span class="w-3.5 h-3.5 rounded-full bg-red-500 inline-block -mr-1"></span>
+                        <span class="w-3.5 h-3.5 rounded-full bg-amber-400 opacity-90 inline-block"></span>
+                    </div>
+                </div>
+
+                <!-- Footer Copyright & Links -->
+                <div class="border-t border-teal-700/60 pt-4 text-xs text-teal-200 font-medium">
+                    <p class="mb-2">© 2026 כל הזכויות שמורות – Paula Pet Store | שירות לקוחות: <span dir="ltr">055-270-7788</span></p>
+                    <div class="flex items-center justify-center gap-3 text-[11px] underline">
+                        <a href="#" onclick="event.preventDefault(); showToast('תנאי שימוש ואחריות');">תנאי שימוש</a>
+                        <span>|</span>
+                        <a href="#" onclick="event.preventDefault(); showToast('מדיניות פרטיות ואבטחה');">מדיניות פרטיות</a>
+                        <span>|</span>
+                        <a href="tel:0552707788">צור קשר</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 shadow-2xl flex items-center justify-between max-w-[480px] mx-auto">
+        <div class="flex flex-col text-right">
+            <span class="text-xs font-black text-slate-900">הבקבוק החכם של פאולה</span>
+            <span class="text-[10px] text-teal-700 font-bold">משלוח מהיר עד הבית + אחריות</span>
+        </div>
+        <button onclick="scrollToPricing()" class="bg-teal-700 hover:bg-teal-800 text-white text-xs font-black px-5 py-3 rounded-xl shadow-md transition flex items-center gap-1.5 active:scale-98">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>בחר חבילה והזמן</span>
+        </button>
+    </div>
+
+    <div id="outOfStockModal" class="modal opacity-0 invisible fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl p-6 max-w-xs w-full text-center shadow-2xl transform transition-all scale-95 border border-slate-100">
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+                <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+            <h3 class="text-xl font-black text-slate-900 mb-2">עומס הזמנות גבוה!</h3>
+            <p class="text-xs text-slate-600 mb-6 font-medium leading-relaxed">
+                עקב ביקוש שיא בקיץ 2026, המלאי הנוכחי באריזות המבצע מוגבל. ניתן לשריין בקבוקים או לוודא זמינות בטלפון שירות הלקוחות שלנו: <br>
+                <strong class="text-teal-700 text-sm mt-1 block" dir="ltr">055-270-7788</strong>
+            </p>
+            <button onclick="closeModal()" class="w-full py-3.5 bg-teal-700 text-white font-black rounded-xl shadow-md hover:bg-teal-800 active:scale-95 transition text-sm">
+                הבנתי, תודה
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-4 py-2.5 rounded-full text-xs font-bold shadow-xl opacity-0 transition-opacity duration-300 pointer-events-none z-50 flex items-center gap-2 border border-slate-700">
+        <i class="fa-solid fa-circle-info text-teal-400"></i>
+        <span id="toastMsg">הודעה</span>
+    </div>
+
+    <script>
+        function setCardColor(cardNum, color) {
+            const dotBlue = document.getElementById(`card${cardNum}-dot-blue`);
+            const dotPink = document.getElementById(`card${cardNum}-dot-pink`);
+            if (color === 'blue') {
+                dotBlue.classList.add('selected');
+                dotPink.classList.remove('selected');
+                showToast('יחידה בודדת: נבחר טורקיז');
+            } else {
+                dotPink.classList.add('selected');
+                dotBlue.classList.remove('selected');
+                showToast('יחידה בודדת: נבחר ורוד');
+            }
+        }
+
+        function setCard2Combination(combo) {
+            const btnBP = document.getElementById('card2-combo-bp');
+            const btnBB = document.getElementById('card2-combo-bb');
+            const btnPP = document.getElementById('card2-combo-pp');
+
+            [btnBP, btnBB, btnPP].forEach(btn => {
+                btn.className = "p-1.5 rounded-full border-2 border-slate-200 bg-white focus:outline-none flex items-center gap-1.5 transition";
+            });
+
+            if (combo === 'blue-pink') {
+                btnBP.className = "p-1.5 rounded-full border-2 border-teal-600 bg-teal-50 focus:outline-none flex items-center gap-1.5 transition scale-110 shadow-xs";
+                showToast('זוג בקבוקים: טורקיז + ורוד');
+            } else if (combo === 'blue-blue') {
+                btnBB.className = "p-1.5 rounded-full border-2 border-teal-600 bg-teal-50 focus:outline-none flex items-center gap-1.5 transition scale-110 shadow-xs";
+                showToast('זוג בקבוקים: טורקיז + טורקיז');
+            } else {
+                btnPP.className = "p-1.5 rounded-full border-2 border-teal-600 bg-teal-50 focus:outline-none flex items-center gap-1.5 transition scale-110 shadow-xs";
+                showToast('זוג בקבוקים: ורוד + ורוד');
+            }
+        }
+
+        function setCard3Combination(combo) {
+            const btnM1 = document.getElementById('card3-combo-m1');
+            const btnM2 = document.getElementById('card3-combo-m2');
+            const btnAB = document.getElementById('card3-combo-ab');
+
+            [btnM1, btnM2, btnAB].forEach(btn => {
+                btn.className = "p-1.5 rounded-full border-2 border-slate-200 bg-white focus:outline-none flex items-center gap-1 transition";
+            });
+
+            if (combo === 'mix1') {
+                btnM1.className = "p-1.5 rounded-full border-2 border-teal-600 bg-teal-50 focus:outline-none flex items-center gap-1 transition scale-110 shadow-xs";
+                showToast('חבילה משפחתית: 2 טורקיז + 1 ורוד');
+            } else if (combo === 'mix2') {
+                btnM2.className = "p-1.5 rounded-full border-2 border-teal-600 bg-teal-50 focus:outline-none flex items-center gap-1 transition scale-110 shadow-xs";
+                showToast('חבילה משפחתית: 1 טורקיז + 2 ורוד');
+            } else {
+                btnAB.className = "p-1.5 rounded-full border-2 border-teal-600 bg-teal-50 focus:outline-none flex items-center gap-1 transition scale-110 shadow-xs";
+                showToast('חבילה משפחתית: 3 טורקיז');
+            }
+        }
+
+        function scrollToPricing() {
+            const pricing = document.getElementById('pricing-section');
+            if (pricing) pricing.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleAccordion(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+            if (!isActive) item.classList.add('active');
+        }
+
+        function addToCart(bundleName) {
+            showOutOfStockModal();
+        }
+
+        function showOutOfStockModal() {
+            document.getElementById('outOfStockModal').classList.add('modal-active');
+        }
+
+        function closeModal() {
+            document.getElementById('outOfStockModal').classList.remove('modal-active');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.innerText = msg;
+            toast.classList.remove('opacity-0');
+            setTimeout(() => toast.classList.add('opacity-0'), 2400);
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('outOfStockModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
