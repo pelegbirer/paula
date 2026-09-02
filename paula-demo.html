@@ -78,6 +78,13 @@
             transform: scale(1.25);
             box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #0f766e;
         }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.75; }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
     </style>
 </head>
 <body class="bg-slate-200 min-h-screen">
@@ -114,12 +121,12 @@
         </header>
 
         <section id="hero" class="p-3 pt-4">
-            <!-- Hero Section: Text over background image without white box -->
+            <!-- Hero Section: Background image focused more on the right/dog -->
             <div class="relative rounded-3xl overflow-hidden shadow-lg border border-slate-200/80 min-h-[440px] flex items-end">
-                <!-- Background Image -->
+                <!-- Background Image shifted right to show more of the dog -->
                 <img src="https://imgur.com/Z4qR1pa.png" 
                      alt="הבקבוק החכם של פאולה - תמונה ראשית" 
-                     class="absolute inset-0 w-full h-full object-cover object-center" />
+                     class="absolute inset-0 w-full h-full object-cover object-right" />
 
                 <!-- Gradient Overlay for Readability -->
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
@@ -182,7 +189,20 @@
                 </div>
             </div>
 
-            <div id="pricing-section" class="mt-4">
+            <div class="bg-teal-50 border border-teal-200 rounded-2xl p-3 mb-4 flex items-center justify-between text-teal-900 shadow-xs">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center text-xs animate-pulse">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-black block">ביקוש שיא היום! נותרו עוד 14 יחידות במלאי</span>
+                        <span class="text-[10px] text-teal-700 font-medium">193 אנשים צופים בעמוד זה כעת</span>
+                    </div>
+                </div>
+                <span class="bg-teal-600 text-white text-[10px] font-black px-2 py-1 rounded-lg">חם</span>
+            </div>
+
+            <div id="pricing-section" class="mt-8">
                 <div class="text-center mb-4">
                     <span class="bg-teal-100 text-teal-800 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">מחירון מבצע מיוחד</span>
                     <h2 class="text-xl font-black text-slate-900 mt-1">בחרו את החבילה המשתלמת עבורכם</h2>
@@ -200,10 +220,12 @@
                             </div>
                         </div>
 
-                        <div class="w-full h-[320px] sm:h-[360px] mx-auto my-3 flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-50 via-teal-50/10 to-teal-50/30 rounded-2xl border border-slate-100/80 p-2 shadow-inner">
-                            <img src="https://imgur.com/TKhTt4t.png" 
-                                 alt="בקבוק אחד" 
-                                 class="w-full h-full object-contain drop-shadow-lg transition-transform duration-500 hover:scale-105" />
+                        <!-- Huge Product Image Container -->
+                        <div class="w-full h-[480px] sm:h-[520px] mx-auto my-3 flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-50 via-teal-50/10 to-teal-50/30 rounded-2xl border border-slate-100/80 p-2 shadow-inner">
+                            <img src="https://i.imgur.com/vDO9ozK.jpg" 
+                                 alt="בקבוק יחיד" 
+                                 class="w-full h-full object-contain scale-110 drop-shadow-2xl transition-transform duration-500 hover:scale-125" 
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x600/f1f5f9/0f766e?text=Paula+1+Bottle';" />
                         </div>
 
                         <div class="text-center my-3">
@@ -237,10 +259,12 @@
                             </div>
                         </div>
 
-                        <div class="w-full h-[320px] sm:h-[360px] mx-auto my-3 flex items-center justify-center overflow-hidden bg-gradient-to-b from-teal-50/40 via-teal-50/20 to-teal-100/40 rounded-2xl border border-teal-100 p-2 shadow-inner">
-                            <img src="https://imgur.com/4sFLuTK.png" 
-                                 alt="שני בקבוקים" 
-                                 class="w-full h-full object-contain drop-shadow-lg transition-transform duration-500 hover:scale-105" />
+                        <!-- Huge Product Image Container -->
+                        <div class="w-full h-[480px] sm:h-[520px] mx-auto my-3 flex items-center justify-center overflow-hidden bg-gradient-to-b from-teal-50/40 via-teal-50/20 to-teal-100/40 rounded-2xl border border-teal-100 p-2 shadow-inner">
+                            <img src="https://i.imgur.com/heqRyjG.jpg" 
+                                 alt="זוג בקבוקים" 
+                                 class="w-full h-full object-contain scale-110 drop-shadow-2xl transition-transform duration-500 hover:scale-125"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x600/f1f5f9/0f766e?text=Paula+2+Bottles';" />
                         </div>
 
                         <div class="text-center my-3">
@@ -280,10 +304,12 @@
                             </div>
                         </div>
 
-                        <div class="w-full h-[320px] sm:h-[360px] mx-auto my-3 flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-50 via-teal-50/10 to-teal-50/30 rounded-2xl border border-slate-100/80 p-2 shadow-inner">
-                            <img src="https://imgur.com/0yuvVEK.png" 
+                        <!-- Huge Product Image Container -->
+                        <div class="w-full h-[480px] sm:h-[520px] mx-auto my-3 flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-50 via-teal-50/10 to-teal-50/30 rounded-2xl border border-slate-100/80 p-2 shadow-inner">
+                            <img src="https://i.imgur.com/C4YiDNW.jpg" 
                                  alt="שלושה בקבוקים" 
-                                 class="w-full h-full object-contain drop-shadow-lg transition-transform duration-500 hover:scale-105" />
+                                 class="w-full h-full object-contain scale-110 drop-shadow-2xl transition-transform duration-500 hover:scale-125" 
+                                 onerror="this.onerror=null; this.src='https://placehold.co/600x600/f1f5f9/0f766e?text=Paula+3+Bottles';" />
                         </div>
 
                         <div class="text-center my-3">
@@ -329,7 +355,7 @@
                 </div>
             </div>
 
-            <!-- Reviews Grid -->
+            <!-- Reviews Grid with Full Hebrew Names and No Images -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
                 <!-- Review 1 -->
                 <div class="bg-white p-4 rounded-2xl border border-slate-200/60 shadow-xs flex flex-col justify-between text-right">
@@ -416,7 +442,7 @@
                 </div>
             </div>
 
-            <!-- Trust Badges Footer -->
+            <!-- Professional Trust Badges Footer with Money Icon -->
             <div class="grid grid-cols-3 gap-2 py-4 border-t border-slate-200/80 text-center">
                 <div class="flex flex-col items-center">
                     <div class="w-11 h-11 rounded-full border border-teal-200 text-teal-700 flex items-center justify-center text-lg mb-1 bg-white shadow-xs">
@@ -513,17 +539,20 @@
                     <span>הזמינו את הבקבוק עכשיו</span>
                 </button>
 
-                <!-- Secure Payment Badges with Updated Bit Container (Compact width & larger bit image) -->
+                <!-- Secure Payment Badges -->
                 <div class="flex items-center justify-center gap-2 mb-6">
-                    <div class="bg-white px-2 py-1.5 rounded-lg flex items-center justify-center shadow-xs cursor-pointer transition h-7 w-12" onclick="showToast('תשלום מהיר ומאובטח באמצעות Bit')" title="Bit">
-                        <img src="https://i.imgur.com/WLkkLXf.png" alt="Bit" class="h-6 w-6 object-contain">
-                    </div>
                     <div class="bg-white/95 px-2.5 py-1.5 rounded-lg flex items-center justify-center shadow-xs w-12 h-7">
                         <span class="font-black italic text-blue-900 text-xs">VISA</span>
                     </div>
                     <div class="bg-white/95 px-2 py-1 rounded-lg flex items-center justify-center shadow-xs w-12 h-7 gap-0.5">
                         <span class="w-3.5 h-3.5 rounded-full bg-red-500 inline-block -mr-1"></span>
                         <span class="w-3.5 h-3.5 rounded-full bg-amber-400 opacity-90 inline-block"></span>
+                    </div>
+                    <div class="bg-white/95 px-2 py-1 rounded-lg flex items-center justify-center shadow-xs text-[9px] font-extrabold text-teal-800 leading-none text-center">
+                        SSL<br>מוצפן 100%
+                    </div>
+                    <div class="bg-white/95 px-2.5 py-1.5 rounded-lg flex items-center justify-center shadow-xs w-12 h-7">
+                        <span class="font-black italic text-blue-700 text-xs">PayPal</span>
                     </div>
                 </div>
 
@@ -553,6 +582,16 @@
         </button>
     </div>
 
+    <div id="live-purchase-popup" class="fixed bottom-20 right-4 z-40 bg-white border border-slate-200 shadow-xl rounded-2xl p-3 max-w-[260px] transform translate-y-20 opacity-0 transition-all duration-500 flex items-center gap-3 pointer-events-none">
+        <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center shrink-0 border border-teal-100">
+            <i class="fa-solid fa-bag-shopping text-sm"></i>
+        </div>
+        <div class="text-right">
+            <span id="popup-buyer" class="text-[11px] font-black text-slate-900 block">איתי מחיפה הרגע רכש זוג בקבוקים!</span>
+            <span class="text-[9px] text-slate-400 block font-medium">לפני כ-2 דקות • משלוח חינם</span>
+        </div>
+    </div>
+
     <div id="outOfStockModal" class="modal opacity-0 invisible fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-xs">
         <div class="bg-white rounded-3xl p-6 max-w-xs w-full text-center shadow-2xl transform transition-all scale-95 border border-slate-100">
             <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
@@ -576,6 +615,20 @@
     </div>
 
     <script>
+        function selectColor(color) {
+            const blueBtn = document.getElementById('color-btn-blue');
+            const pinkBtn = document.getElementById('color-btn-pink');
+            if (color === 'blue') {
+                blueBtn.classList.add('selected');
+                pinkBtn.classList.remove('selected');
+                showToast('נבחר צבע: טורקיז קלאסי');
+            } else {
+                pinkBtn.classList.add('selected');
+                blueBtn.classList.remove('selected');
+                showToast('נבחר צבע: ורוד פסטל');
+            }
+        }
+
         function setCardColor(cardNum, color) {
             const dotBlue = document.getElementById(`card${cardNum}-dot-blue`);
             const dotPink = document.getElementById(`card${cardNum}-dot-pink`);
@@ -664,6 +717,30 @@
             setTimeout(() => toast.classList.add('opacity-0'), 2400);
         }
 
+        // Live Purchase Notifications Simulation
+        const buyers = [
+            { name: "איתי מחיפה", text: "הרגע רכש זוג בקבוקים!" },
+            { name: "מיכל מתל אביב", text: "הרגע רכשה חבילה משפחתית!" },
+            { name: "רועי מראשון לציון", text: "הרגע רכש בקבוק יחיד!" },
+            { name: "שיר מבאר שבע", text: "הרגע רכשה זוג בקבוקים!" }
+        ];
+
+        function showLivePopup() {
+            const popup = document.getElementById('live-purchase-popup');
+            const buyerEl = document.getElementById('popup-buyer');
+            const randomBuyer = buyers[Math.floor(Math.random() * buyers.length)];
+            if (buyerEl) buyerEl.innerText = `${randomBuyer.name} ${randomBuyer.text}`;
+            
+            if (popup) {
+                popup.classList.remove('translate-y-20', 'opacity-0');
+                setTimeout(() => {
+                    popup.classList.add('translate-y-20', 'opacity-0');
+                }, 4000);
+            }
+        }
+
+        setInterval(showLivePopup, 12000);
+
         window.onclick = function(event) {
             const modal = document.getElementById('outOfStockModal');
             if (event.target === modal) {
@@ -671,5 +748,7 @@
             }
         }
     </script>
+     <script data-goatcounter="https://pelegbirer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
